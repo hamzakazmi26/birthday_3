@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🎉</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #ff6b6b;
+      --secondary: #ff8e8e;
+      --accent: #ffb3b3;
+      --text: #333;
+      --light: #fff9f9;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: var(--light);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Password Screen */
+    .password-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      color: white;
+    }
+    
+    .password-screen input {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 50px;
+      margin: 20px 0;
+      font-size: 1.2rem;
+      text-align: center;
+      width: 80%;
+      max-width: 400px;
+    }
+    
+    .password-screen button {
+      background-color: white;
+      color: var(--primary);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .password-screen button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    /* Confetti and Balloons */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: var(--primary);
+      animation: fall linear infinite;
+      z-index: -1;
+    }
+    
+    .balloon {
+      position: fixed;
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      animation: float linear infinite;
+      z-index: -1;
+      opacity: 0.7;
+    }
+    
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 30px;
+      width: 2px;
+      height: 40px;
+      background-color: rgba(0,0,0,0.2);
+    }
+    
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+    
+    @keyframes float {
+      to {
+        transform: translateY(-100vh) rotate(360deg);
+      }
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin: 2rem 0;
+      position: relative;
+    }
+    
+    .cake {
+      font-size: 8rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .cake:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Slideshow Gallery */
+    .slideshow {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 2rem 0;
+    }
+    
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .slide.active {
+      opacity: 1;
+    }
+    
+    /* Quiz Section */
+    .quiz {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 2rem 0;
+    }
+    
+    .quiz-question {
+      margin-bottom: 1rem;
+    }
+    
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+    
+    .quiz-option {
+      padding: 1rem;
+      background-color: var(--light);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .quiz-option:hover {
+      background-color: var(--accent);
+    }
+    
+    /* Wish Collector */
+    .wish-form {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 2rem 0;
+    }
+    
+    .wish-form textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin: 1rem 0;
+      resize: vertical;
+      min-height: 100px;
+    }
+    
+    .wish-form button {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .wish-form button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .cake {
+        font-size: 5rem;
+      }
+      
+      .quiz-options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Password Screen -->
+  <div class="password-screen" id="passwordScreen">
+    <h2>🎂 Enter the Birthday Password 🎉</h2>
+    <p>Hint: It's the birthday person's name</p>
+    <input type="password" id="passwordInput" placeholder="Enter password...">
+    <button onclick="checkPassword()">Unlock Celebration</button>
+  </div>
+  
+  <!-- Main Content (Hidden Initially) -->
+  <div id="mainContent" style="display: none;">
+    <!-- Confetti and Balloons Background -->
+    <div id="confetti-container"></div>
+    <div id="balloon-container"></div>
+    
+    <!-- Header -->
+    <header>
+      <h1>Happy Birthday, <span id="name">Promax</span>! 🎉</h1>
+      <p>Today is <span id="birthdayDate"></span> - Your Special Day!</p>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="cake" onclick="blowCandle()">🎂</div>
+        <p>Click the cake to blow out the candles!</p>
+        <audio id="birthdaySong" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+      </section>
+      
+      <!-- Slideshow Gallery -->
+      <section>
+        <h2><i class="fas fa-images"></i> Memory Slideshow</h2>
+        <div class="slideshow">
+          <img class="slide active" src="https://source.unsplash.com/random/800x600/?birthday" alt="Birthday memory">
+          <img class="slide" src="https://source.unsplash.com/random/800x600/?celebration" alt="Celebration">
+          <img class="slide" src="https://source.unsplash.com/random/800x600/?smile" alt="Smile">
+          <img class="slide" src="https://source.unsplash.com/random/800x600/?happy" alt="Happy">
+        </div>
+      </section>
+      
+      <!-- Birthday Quiz -->
+      <section class="quiz">
+        <h2><i class="fas fa-question-circle"></i> Birthday Quiz</h2>
+        <p>How well do you know <span id="name2">Promax</span>?</p>
+        
+        <div class="quiz-question">
+          <h3>What is <span id="name3">Promax</span>'s favorite color?</h3>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="checkAnswer(this, 'blue')">Blue</div>
+            <div class="quiz-option" onclick="checkAnswer(this, 'red')">Red</div>
+            <div class="quiz-option" onclick="checkAnswer(this, 'green')">Green</div>
+            <div class="quiz-option" onclick="checkAnswer(this, 'yellow')">Yellow</div>
+          </div>
+          <p id="quizResult"></p>
+        </div>
+      </section>
+      
+      <!-- Wish Collector -->
+      <section class="wish-form">
+        <h2><i class="fas fa-pencil-alt"></i> Leave a Birthday Wish</h2>
+        <textarea id="wishMessage" placeholder="Write your special birthday wish here..."></textarea>
+        <button onclick="submitWish()">Submit Wish</button>
+        <div id="wishConfirmation" style="margin-top: 1rem;"></div>
+      </section>
+      
+      <!-- Countdown -->
+      <section style="text-align: center; margin: 2rem 0;">
+        <h2><i class="fas fa-clock"></i> Birthday Countdown</h2>
+        <div id="countdown" style="font-size: 1.5rem; font-weight: bold;"></div>
+      </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+      <p>Made with ❤️ for <span id="name4">Promax</span>'s special day</p>
+      <p>© <span id="year"></span> All rights reserved</p>
+    </footer>
+  </div>
+  
+  <script>
+    // Password Protection
+    function checkPassword() {
+      const password = document.getElementById('passwordInput').value.toLowerCase();
+      if (password === 'promax') { // Change this to your desired password
+        document.getElementById('passwordScreen').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        createConfetti();
+        createBalloons();
+      } else {
+        alert('Oops! Wrong password. Hint: Try the birthday person\'s name');
+      }
+    }
+    
+    // Create confetti
+    function createConfetti() {
+      const colors = ['#ff6b6b', '#ff8e8e', '#ffb3b3', '#ffd3d3', '#fff9f9'];
+      const container = document.getElementById('confetti-container');
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+        confetti.style.animationDelay = Math.random() * 5 + 's';
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = Math.random() * 10 + 5 + 'px';
+        container.appendChild(confetti);
+      }
+    }
+    
+    // Create balloons
+    function createBalloons() {
+      const colors = ['#ff6b6b', '#ff8e8e', '#4CAF50', '#2196F3', '#FFC107', '#9C27B0'];
+      const container = document.getElementById('balloon-container');
+      
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        balloon.style.animationDuration = Math.random() * 10 + 10 + 's';
+        balloon.style.animationDelay = Math.random() * 5 + 's';
+        balloon.style.width = Math.random() * 40 + 40 + 'px';
+        balloon.style.height = Math.random() * 60 + 60 + 'px';
+        container.appendChild(balloon);
+      }
+    }
+    
+    // Blow out candle
+    function blowCandle() {
+      const cake = document.querySelector('.cake');
+      const audio = document.getElementById('birthdaySong');
+      
+      cake.textContent = '🎂';
+      audio.play();
+      
+      // Create floating hearts
+      for (let i = 0; i < 10; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤️';
+        heart.style.position = 'absolute';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '50vh';
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.style.animation = `float-up ${Math.random() * 2 + 1}s ease-in forwards`;
+        document.body.appendChild(heart);
+        
+        // Remove after animation
+        setTimeout(() => {
+          heart.remove();
+        }, 1000);
+      }
+    }
+    
+    // Slideshow functionality
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    
+    function showSlide(n) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (n + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    
+    function nextSlide() {
+      showSlide(currentSlide + 1);
+    }
+    
+    // Auto-rotate slideshow
+    setInterval(nextSlide, 3000);
+    
+    // Quiz functionality
+    function checkAnswer(selectedOption, correctAnswer) {
+      const quizResult = document.getElementById('quizResult');
+      const options = document.querySelectorAll('.quiz-option');
+      
+      options.forEach(option => {
+        option.style.backgroundColor = '#f5f5f5';
+      });
+      
+      if (selectedOption.textContent.toLowerCase() === correctAnswer) {
+        selectedOption.style.backgroundColor = '#4CAF50';
+        quizResult.innerHTML = '🎉 Correct! You know <span id="name5">Promax</span> well!';
+      } else {
+        selectedOption.style.backgroundColor = '#f44336';
+        quizResult.innerHTML = '❌ Oops! Try again!';
+      }
+    }
+    
+    // Wish collector
+    function submitWish() {
+      const wish = document.getElementById('wishMessage').value;
+      if (wish.trim() === '') {
+        alert('Please write your wish before submitting!');
+        return;
+      }
+      
+      // In a real implementation, you would save this to a database
+      // For this demo, we'll just show a confirmation
+      document.getElementById('wishConfirmation').innerHTML = `
+        <div style="background: #e8f5e9; padding: 1rem; border-radius: 5px;">
+          <p>Thank you for your wish! ❤️</p>
+          <p><em>"${wish}"</em></p>
+        </div>
+      `;
+      
+      document.getElementById('wishMessage').value = '';
+    }
+    
+    // Countdown to next birthday
+    function updateCountdown() {
+      const now = new Date();
+      const nextBirthday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      
+      if (now > nextBirthday) {
+        nextBirthday.setFullYear(nextBirthday.getFullYear() + 1);
+      }
+      
+      const diff = nextBirthday - now;
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      
+      document.getElementById('countdown').innerHTML = `
+        ${days}d ${hours}h ${minutes}m ${seconds}s
+      `;
+    }
+    
+    // Initialize
+    window.onload = function() {
+      // Personalize name (change this to the birthday person's name)
+      const name = 'Promax';
+      document.querySelectorAll('#name, #name2, #name3, #name4, #name5').forEach(el => {
+        el.textContent = name;
+      });
+      
+      // Set current date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      document.getElementById('birthdayDate').textContent = new Date().toLocaleDateString('en-US', options);
+      
+      // Set current year
+      document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // Start countdown
+      setInterval(updateCountdown, 1000);
+    };
+    
+    // Add floating animation
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes float-up {
+        to {
+          transform: translateY(-100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
